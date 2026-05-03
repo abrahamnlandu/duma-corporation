@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Duma Corporation | Expertise en Assainissement</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ----- RESET & VARIABLES (Duma colors) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rouge: #cc0000;
+            --rouge-dark: #a30000;
+            --bleu-nuit: #0a1929;
+            --bleu-medium: #1a365d;
+            --blanc: #ffffff;
+            --gris-clair: #f5f5f5;
+            --gris-glass: rgba(255,255,255,0.08);
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.1);
+            --shadow-md: 0 12px 30px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--gris-clair);
+            color: #1e293b;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4, .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ----- SCROLL REVEAL (from site 1) ----- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-left.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-right.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ----- BACKGROUND BLOBS (frost effect) ----- */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--rouge);
+            top: -100px;
+            right: -100px;
+        }
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--bleu-medium);
+            bottom: -150px;
+            left: -150px;
+        }
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: #cc000066;
+            top: 40%;
+            left: 30%;
+        }
+
+        /* ----- HEADER (glass) ----- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: var(--transition);
+            background: transparent;
+        }
+        header.scrolled {
+            background: rgba(10, 25, 41, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 0.7rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 48px;
+            width: auto;
+        }
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blanc);
+        }
+        .logo-text span {
+            color: var(--rouge);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--blanc);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--rouge);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 10px;
+            margin-left: 20px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn.active {
+            background: var(--rouge);
+            border-color: var(--rouge);
+        }
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* mobile menu button */
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+        /* mobile lang switch (inside nav) */
+        .mobile-lang-switch {
+            display: none;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 15px;
+        }
+
+        /* ----- HERO ----- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bleu-nuit) 0%, #0f2a3f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        .hero-title {
+            font-size: 3.8rem;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--rouge), #ff4d4d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-sub {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 2rem;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-primary {
+            background: var(--rouge);
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: var(--rouge-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(204,0,0,0.3);
+        }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+        }
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ----- SECTIONS GLOBAL ----- */
+        .section {
+            padding: 5rem 0;
+        }
+        .section-dark {
+            background: var(--bleu-nuit);
+            color: white;
+        }
+        .section-light {
+            background: var(--blanc);
+            color: #1e293b;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-tag {
+            color: var(--rouge);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-img-wrap {
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-md);
+        }
+        .about-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+        .about-img-wrap:hover .about-img {
+            transform: scale(1.03);
+        }
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--bleu-nuit);
+        }
+        .about-points {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .about-points li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .about-points i {
+            color: var(--rouge);
+            font-size: 1.2rem;
+        }
+
+        /* SERVICES & CONTRACTS (cards) */
+        .services-grid, .contracts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .service-card, .contract-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .section-light .service-card, .section-light .contract-card {
+            background: white;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .service-card:hover, .contract-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+        }
+        .card-icon-wrap {
+            width: 70px;
+            height: 70px;
+            background: rgba(204,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--rouge);
+        }
+        .service-features {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        .service-features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .service-features li i {
+            color: var(--rouge);
+            font-size: 0.8rem;
+        }
+        .btn-outline-sm {
+            background: transparent;
+            border: 1px solid var(--rouge);
+            color: var(--rouge);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .btn-outline-sm:hover {
+            background: var(--rouge);
+            color: white;
+        }
+
+        /* GALLERY (modern grid + modal) */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(204,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            color: var(--bleu-nuit);
+            margin-bottom: 1rem;
+        }
+        .contact-details p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .contact-details i {
+            color: var(--rouge);
+            width: 24px;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .social-link {
+            width: 42px;
+            height: 42px;
+            background: var(--bleu-nuit);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: 0.2s;
+        }
+        .social-link:hover {
+            background: var(--rouge);
+            transform: translateY(-3px);
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--rouge);
+            box-shadow: 0 0 0 3px rgba(204,0,0,0.1);
+        }
+        .btn-full {
+            width: 100%;
+            text-align: center;
+        }
+        .form-notification {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bleu-nuit);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-brand p {
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+        .footer-col h4 {
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-col a {
+            color: #ccc;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer-col a:hover {
+            color: var(--rouge);
+            padding-left: 5px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: var(--rouge);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* responsive */
+        @media (max-width: 968px) {
+            .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                background: var(--bleu-nuit);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: 0.3s;
+                backdrop-filter: blur(12px);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .hamburger {
+                display: block;
+            }
+            .lang-switch {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Back to Top -->
+<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+<!-- HEADER -->
+<header id="header">
+    <div class="navbar">
+        <div class="logo">
+            <img src="imgs/logo.png" alt="Duma Corporation Logo" onerror="this.style.display='none'">
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#hero" data-key="nav_home">Accueil</a></li>
+            <li><a href="#about" data-key="nav_about">À propos</a></li>
+            <li><a href="#services" data-key="nav_services">Services</a></li>
+            <li><a href="#contracts" data-key="nav_contracts">Contrats</a></li>
+            <li><a href="#gallery" data-key="nav_gallery">Galerie</a></li>
+            <li><a href="#contact" data-key="nav_contact">Contact</a></li>
+        </ul>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="fr">FR</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div class="hero-inner reveal">
+        <div class="hero-badge"><span data-key="hero_badge">Solutions d'assainissement professionnelles</span></div>
+        <h1 class="hero-title"><span data-key="hero_title1">Expertise en</span> <span class="gradient-text" data-key="hero_title2"> Assainissement</span></h1>
+        <p class="hero-sub" data-key="hero_desc">Duma Corporation fournit des services d'assainissement professionnels et dispose d'équipements de haute qualité pour répondre aux besoins de nos clients institutionnels et gouvernementaux.</p>
+        <div class="hero-cta">
+            <a href="#contact" class="btn btn-primary" data-key="hero_cta">Nous contacter</a>
+            <a href="#services" class="btn btn-ghost" data-key="hero_cta2">Nos services</a>
+        </div>
+    </div>
+</section>
+
+<!-- STATS / CHIFFRES CLÉS -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-title reveal"><div class="section-tag" data-key="stats_tag">Notre impact</div><h2 data-key="stats_title">Chiffres clés</h2></div>
+        <div class="stats-grid">
+            <div class="stat-card reveal"><div class="stat-number" data-target="12">0</div><div class="stat-label" data-key="stat1">Années d'expérience</div></div>
+            <div class="stat-card reveal"><div class="stat-number" data-target="150">0</div><div class="stat-label" data-key="stat2">Projets réalisés</div></div>
+            <div class="stat-card reveal"><div class="stat-number" data-target="25">0</div><div class="stat-label" data-key="stat3">Partenaires institutionnels</div></div>
+            <div class="stat-card reveal"><div class="stat-number" data-target="500">0</div><div class="stat-label" data-key="stat4">Bancs fournis aux écoles</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section-light" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-img-wrap reveal reveal-left">
+                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&auto=format" alt="Duma Corporation" class="about-img">
+            </div>
+            <div class="about-text reveal reveal-right">
+                <div class="section-tag" data-key="about_tag">Qui sommes-nous ?</div>
+                <h3 data-key="about_title">Duma Corporation - Expertise et professionnalisme</h3>
+                <p data-key="about_p1">Fondée sur les principes de qualité, d'efficacité et de professionnalisme, Duma Corporation s'est imposée comme un leader dans le secteur de l'assainissement en République Démocratique du Congo.</p>
+                <p data-key="about_p2">Nous disposons d'une flotte d'engins modernes et de tracteurs performants pour exécuter nos divers contrats avec excellence.</p>
+                <ul class="about-points">
+                    <li><i class="fas fa-check-circle"></i> <span data-key="about_point1">Parc matériel moderne & fiable</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-key="about_point2">Contrats gouvernementaux et institutionnels</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-key="about_point3">Engagement environnemental strict</span></li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" data-key="about_btn">Collaborer avec nous</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VALEURS AJOUTÉES -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-title reveal"><div class="section-tag" data-key="values_tag">Nos principes</div><h2 data-key="values_title">Pourquoi Duma Corporation ?</h2></div>
+        <div class="values-grid">
+            <div class="value-card reveal"><div class="card-icon-wrap"><i class="fas fa-leaf"></i></div><h3 data-key="value1_title">Respect de l'environnement</h3><p data-key="value1_desc">Nos méthodes d'assainissement privilégient les solutions durables et respectueuses des écosystèmes locaux.</p></div>
+            <div class="value-card reveal"><div class="card-icon-wrap"><i class="fas fa-chart-line"></i></div><h3 data-key="value2_title">Efficacité prouvée</h3><p data-key="value2_desc">Des délais respectés et une exécution rigoureuse grâce à notre matériel performant et notre équipe qualifiée.</p></div>
+            <div class="value-card reveal"><div class="card-icon-wrap"><i class="fas fa-hand-holding-heart"></i></div><h3 data-key="value3_title">Impact social</h3><p data-key="value3_desc">Nous contribuons à l'amélioration des conditions de vie des communautés via nos projets sociaux (mobilier scolaire, etc.).</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES (style glass) -->
+<section class="section section-dark" id="services">
+    <div class="container">
+        <div class="section-title reveal">
+            <div class="section-tag" data-key="services_tag">Ce que nous faisons</div>
+            <h2 data-key="services_title">Nos services</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="card-icon-wrap"><i class="fas fa-tractor"></i></div>
+                <h3 data-key="service1_title">Assainissement Urbain</h3>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> <span data-key="service1_feat1">Collecte et traitement des déchets</span></li>
+                    <li><i class="fas fa-check"></i> <span data-key="service1_feat2">Nettoyage des espaces publics</span></li>
+                    <li><i class="fas fa-check"></i> <span data-key="service1_feat3">Gestion des eaux usées</span></li>
+                </ul>
+                <button class="btn-outline-sm inquire-btn" data-key="service_quote">Demander un devis</button>
+            </div>
+            <div class="service-card reveal">
+                <div class="card-icon-wrap"><i class="fas fa-truck-ramp-box"></i></div>
+                <h3 data-key="service2_title">Location d'Engins</h3>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> <span data-key="service2_feat1">Tracteurs & chargeuses</span></li>
+                    <li><i class="fas fa-check"></i> <span data-key="service2_feat2">Camions bennes</span></li>
+                    <li><i class="fas fa-check"></i> <span data-key="service2_feat3">Location courte/longue durée</span></li>
+                </ul>
+                <button class="btn-outline-sm inquire-btn" data-key="service_quote">Demander un devis</button>
+            </div>
+            <div class="service-card reveal">
+                <div class="card-icon-wrap"><i class="fas fa-handshake"></i></div>
+                <h3 data-key="service3_title">Contrats Gouvernementaux</h3>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> <span data-key="service3_feat1">Projets d'envergure nationale</span></li>
+                    <li><i class="fas fa-check"></i> <span data-key="service3_feat2">Conformité stricte aux normes</span></li>
+                    <li><i class="fas fa-check"></i> <span data-key="service3_feat3">Partenariat public-privé</span></li>
+                </ul>
+                <button class="btn-outline-sm inquire-btn" data-key="service_quote">Demander un devis</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTRATS (cards) -->
+<section class="section section-light" id="contracts">
+    <div class="container">
+        <div class="section-title reveal">
+            <div class="section-tag" data-key="contracts_tag">Nos références</div>
+            <h2 data-key="contracts_title">Contrats en cours</h2>
+        </div>
+        <div class="contracts-grid">
+            <div class="contract-card reveal">
+                <div class="card-icon-wrap"><i class="fas fa-bolt"></i></div>
+                <h3 data-key="contract1_title">Contrat avec la SNEL</h3>
+                <p data-key="contract1_desc">Assainissement et entretien des installations de la Société Nationale d'Électricité.</p>
+            </div>
+            <div class="contract-card reveal">
+                <div class="card-icon-wrap"><i class="fas fa-school"></i></div>
+                <h3 data-key="contract2_title">Gouvernement Provincial</h3>
+                <p data-key="contract2_desc">Fourniture de plus de 500 bancs pour les écoles du Kongo Central, améliorant les conditions d'étude.</p>
+            </div>
+            <div class="contract-card reveal">
+                <div class="card-icon-wrap"><i class="fas fa-city"></i></div>
+                <h3 data-key="contract3_title">Contrats Municipaux</h3>
+                <p data-key="contract3_desc">Partenariats pour l'assainissement régulier et projets spéciaux dans plusieurs municipalités.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALERIE (modern grid) -->
+<section class="section section-dark" id="gallery">
+    <div class="container">
+        <div class="section-title reveal">
+            <div class="section-tag" data-key="gallery_tag">Nos réalisations</div>
+            <h2 data-key="gallery_title">Galerie</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item reveal"><img src="imgs/cover.png" alt="Équipements"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0010.jpg" alt="tondeuse pélouse"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0011.jpeg" alt="Engins depiecé"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0012.jpeg" alt="Engins normal 1"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0013.jpeg" alt="Engins normal 2"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0014.jpeg" alt="paysage environ"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0015.jpeg" alt="Intervention caleb"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+            <div class="gallery-item reveal"><img src="imgs/0016.jpeg" alt="Engins moteur"><div class="gallery-overlay"><i class="fas fa-search-plus fa-2x"></i></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section section-light" id="contact">
+    <div class="container">
+        <div class="section-title reveal">
+            <div class="section-tag" data-key="contact_tag">Parlons de votre projet</div>
+            <h2 data-key="contact_title">Contactez-nous</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info reveal reveal-left">
+                <h3 data-key="contact_info_title">Informations de contact</h3>
+                <div class="contact-details">
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-key="contact_addr">Kongo - Central, Kinshasa / Rép. Dém. du Congo</span></p>
+                    <p><i class="fas fa-phone"></i> +243 896 176 502</p>
+                    <p><i class="fas fa-envelope"></i> contact@duma-corporation.org</p>
+                    <p><i class="fas fa-clock"></i> <span data-key="contact_hours">Lun-Ven: 8h00-17h00 | Sam: 9h00-13h00</span></p>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="contact-form reveal reveal-right">
+                <form id="contactForm">
+                    <input type="text" id="name" placeholder="Votre nom complet" required data-key-placeholder="form_name">
+                    <input type="email" id="email" placeholder="Votre adresse email" required data-key-placeholder="form_email">
+                    <input type="text" id="subject" placeholder="Sujet" required data-key-placeholder="form_subject">
+                    <textarea id="message" rows="5" placeholder="Votre message" required data-key-placeholder="form_message"></textarea>
+                    <button type="submit" class="btn btn-primary btn-full" data-key="form_submit">Envoyer message</button>
+                    <div class="form-notification" id="contactNotif"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo-text" style="color:white;">Duma <span>Corporation</span></div>
+                <p data-key="footer_desc">Expert en solutions d'assainissement et services connexes en RDC.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-key="footer_links">Liens rapides</h4>
+                <ul>
+                    <li><a href="#hero" data-key="nav_home">Accueil</a></li>
+                    <li><a href="#about" data-key="nav_about">À propos</a></li>
+                    <li><a href="#services" data-key="nav_services">Services</a></li>
+                    <li><a href="#contact" data-key="nav_contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-key="footer_services">Nos services</h4>
+                <ul>
+                    <li><a href="#" data-key="footer_s1">Assainissement Urbain</a></li>
+                    <li><a href="#" data-key="footer_s2">Location d'Engins</a></li>
+                    <li><a href="#" data-key="footer_s3">Contrats Gouvernementaux</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-key="footer_contact">Contact</h4>
+                <p><i class="fas fa-phone-alt"></i> +243 896 176 502</p>
+                <p><i class="fas fa-envelope"></i> contact@duma-corporation.org</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Duma Corporation | <span data-key="rights">Tous droits réservés</span> | by <a href="https://graphiverse.net/" target="_blank">graphiverse.net</a></p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ---------- LANGUAGE (FR/EN) ----------
+    const translations = {
+        fr: {
+            nav_home: "Accueil", nav_about: "À propos", nav_services: "Services", nav_contracts: "Contrats", nav_gallery: "Galerie", nav_contact: "Contact",
+            hero_badge: "Solutions d'assainissement professionnelles", hero_title1: "Expertise en", hero_title2: "Assainissement", hero_desc: "Duma Corporation fournit des services d'assainissement professionnels et dispose d'équipements de haute qualité pour répondre aux besoins de nos clients institutionnels et gouvernementaux.", hero_cta: "Nous contacter", hero_cta2: "Nos services",
+            about_tag: "Qui sommes-nous ?", about_title: "Duma Corporation - Expertise et professionnalisme", about_p1: "Fondée sur les principes de qualité, d'efficacité et de professionnalisme, Duma Corporation s'est imposée comme un leader dans le secteur de l'assainissement en République Démocratique du Congo.", about_p2: "Nous disposons d'une flotte d'engins modernes et de tracteurs performants pour exécuter nos divers contrats avec excellence.", about_point1: "Parc matériel moderne & fiable", about_point2: "Contrats gouvernementaux et institutionnels", about_point3: "Engagement environnemental strict", about_btn: "Collaborer avec nous",
+            services_tag: "Ce que nous faisons", services_title: "Nos services",
+            service1_title: "Assainissement Urbain", service1_feat1: "Collecte et traitement des déchets", service1_feat2: "Nettoyage des espaces publics", service1_feat3: "Gestion des eaux usées",
+            service2_title: "Location d'Engins", service2_feat1: "Tracteurs & chargeuses", service2_feat2: "Camions bennes", service2_feat3: "Location courte/longue durée",
+            service3_title: "Contrats Gouvernementaux", service3_feat1: "Projets d'envergure nationale", service3_feat2: "Conformité stricte aux normes", service3_feat3: "Partenariat public-privé", service_quote: "Demander un devis",
+            contracts_tag: "Nos références", contracts_title: "Contrats en cours",
+            contract1_title: "Contrat avec la SNEL", contract1_desc: "Assainissement et entretien des installations de la Société Nationale d'Électricité.",
+            contract2_title: "Gouvernement Provincial", contract2_desc: "Fourniture de plus de 500 bancs pour les écoles du Kongo Central, améliorant les conditions d'étude.",
+            contract3_title: "Contrats Municipaux", contract3_desc: "Partenariats pour l'assainissement régulier et projets spéciaux dans plusieurs municipalités.",
+            gallery_tag: "Nos réalisations", gallery_title: "Galerie",
+            contact_tag: "Parlons de votre projet", contact_title: "Contactez-nous", contact_info_title: "Informations de contact", contact_addr: "Kongo - Central, Kinshasa / Rép. Dém. du Congo", contact_hours: "Lun-Ven: 8h00-17h00 | Sam: 9h00-13h00",
+            form_name: "Votre nom complet", form_email: "Votre adresse email", form_subject: "Sujet", form_message: "Votre message", form_submit: "Envoyer message",
+            footer_desc: "Expert en solutions d'assainissement et services connexes en RDC.", footer_links: "Liens rapides", footer_services: "Nos services", footer_contact: "Contact", rights: "Tous droits réservés", footer_s1: "Assainissement Urbain", footer_s2: "Location d'Engins", footer_s3: "Contrats Gouvernementaux"
+        },
+        en: {
+            nav_home: "Home", nav_about: "About", nav_services: "Services", nav_contracts: "Contracts", nav_gallery: "Gallery", nav_contact: "Contact",
+            hero_badge: "Professional sanitation solutions", hero_title1: "Sanitation", hero_title2: "Expertise", hero_desc: "Duma Corporation provides professional sanitation services and high-quality equipment to meet the needs of our institutional and government clients.", hero_cta: "Contact us", hero_cta2: "Our services",
+            about_tag: "Who we are", about_title: "Duma Corporation - Expertise & Professionalism", about_p1: "Built on quality, efficiency and professionalism, Duma Corporation has become a leader in the sanitation sector in the DRC.", about_p2: "We have a fleet of modern machinery and high-performance tractors to execute our various contracts with excellence.", about_point1: "Modern & reliable fleet", about_point2: "Government & institutional contracts", about_point3: "Strict environmental commitment", about_btn: "Work with us",
+            services_tag: "What we do", services_title: "Our Services",
+            service1_title: "Urban Sanitation", service1_feat1: "Waste collection & treatment", service1_feat2: "Public space cleaning", service1_feat3: "Wastewater management",
+            service2_title: "Equipment Rental", service2_feat1: "Tractors & loaders", service2_feat2: "Dump trucks", service2_feat3: "Short/long-term rental",
+            service3_title: "Government Contracts", service3_feat1: "Large-scale national projects", service3_feat2: "Strict regulatory compliance", service3_feat3: "Public-private partnership", service_quote: "Request a quote",
+            contracts_tag: "Our references", contracts_title: "Active contracts",
+            contract1_title: "Contract with SNEL", contract1_desc: "Sanitation and maintenance of the national electricity company's facilities.",
+            contract2_title: "Provincial Government", contract2_desc: "Supply of over 500 benches for schools in Kongo Central, improving study conditions.",
+            contract3_title: "Municipal Contracts", contract3_desc: "Partnerships for regular sanitation and special projects in several municipalities.",
+            gallery_tag: "Our work", gallery_title: "Gallery",
+            contact_tag: "Let's talk", contact_title: "Get in touch", contact_info_title: "Contact info", contact_addr: "Kongo - Central, Kinshasa / DRC", contact_hours: "Mon-Fri: 8am-5pm | Sat: 9am-1pm",
+            form_name: "Your full name", form_email: "Your email address", form_subject: "Subject", form_message: "Your message", form_submit: "Send message",
+            footer_desc: "Expert in sanitation solutions and related services in DRC.", footer_links: "Quick links", footer_services: "Our services", footer_contact: "Contact", rights: "All rights reserved", footer_s1: "Urban Sanitation", footer_s2: "Equipment Rental", footer_s3: "Government Contracts"
+        }
+    };
+    let currentLang = "fr";
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if(translations[lang][key]) el.innerText = translations[lang][key];
+        });
+        document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-key-placeholder');
+            if(translations[lang][key]) el.placeholder = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll(`.lang-btn[data-lang="${lang}"]`).forEach(btn => btn.classList.add('active'));
+        currentLang = lang;
+    }
+    // events langue
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang'))));
+
+    // mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinksMenu = document.getElementById('navLinks');
+    hamburger?.addEventListener('click', () => navLinksMenu.classList.toggle('active'));
+    document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => navLinksMenu.classList.remove('active')));
+
+    // header scroll
+    const headerEl = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        headerEl.classList.toggle('scrolled', window.scrollY > 50);
+        document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+    });
+    document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // reveal observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('revealed'); });
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+    // smooth scroll nav
+    document.querySelectorAll('.nav-links a, .hero-cta a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const hash = this.getAttribute('href');
+            if(hash && hash.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(hash);
+                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // contact form mailto
+    const form = document.getElementById('contactForm');
+    const notif = document.getElementById('contactNotif');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+        if(!name || !email || !subject || !message) {
+            notif.textContent = currentLang === 'fr' ? 'Veuillez remplir tous les champs.' : 'Please fill all fields.';
+            notif.style.color = 'red';
+            return;
+        }
+        const body = `Nom: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+        window.location.href = `mailto:contact@dumacorporation.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        notif.textContent = currentLang === 'fr' ? 'Merci ! Redirection vers votre messagerie...' : 'Thank you! Redirecting to your email...';
+        notif.style.color = 'green';
+        setTimeout(() => notif.textContent = '', 5000);
+        form.reset();
+    });
+
+    // inquire buttons (scroll contact)
+    document.querySelectorAll('.inquire-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.service-card');
+            const title = card?.querySelector('h3')?.innerText;
+            if(title) document.getElementById('subject').value = title;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // gallery lightbox
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => { const img = item.querySelector('img'); if(img) window.open(img.src, '_blank'); });
+    });
+
+    // active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(sec => { if(window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id'); });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+            if(link.getAttribute('href') === `#${current}`) link.classList.add('active');
+        });
+    });
+
+    // counter animation for stats
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.dataset.target);
+                let current = 0;
+                const increment = target / 30;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if(current >= target) { el.innerText = target; clearInterval(timer); }
+                    else el.innerText = Math.floor(current);
+                }, 40);
+                statObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    statNumbers.forEach(el => statObserver.observe(el));
+
+    applyLanguage('fr');
+</script>
+</body>
+</html>
